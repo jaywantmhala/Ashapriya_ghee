@@ -33,8 +33,8 @@ const Navbar = () => {
 
       <header
         className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${scrolled
-            ? 'bg-cream-50/96 backdrop-blur-xl shadow-[0_4px_30px_rgba(90,50,10,0.1)] border-b border-gold-200/60'
-            : 'bg-transparent'
+          ? 'bg-cream-50/96 backdrop-blur-xl shadow-[0_4px_30px_rgba(90,50,10,0.1)] border-b border-gold-200/60'
+          : 'bg-transparent'
           }`}
       >
         <nav className="section-wrap flex items-center justify-between h-20">
@@ -45,7 +45,7 @@ const Navbar = () => {
             <div className="relative w-12 h-12 rounded-2xl gold-gradient flex items-center justify-center shadow-glow-gold group-hover:shadow-[0_0_36px_rgba(245,158,11,0.7)] transition-all duration-400">
               {/* Rotating ring on hover */}
               <div className="absolute inset-0 rounded-2xl border border-gold-300/40 group-hover:border-gold-300 transition-colors" />
-              <span className="font-display text-lg text-brown-700 leading-none select-none">ॐ</span>
+              <img src="/logo.jpeg" alt="Logo" className="w-full h-full object-cover rounded-2xl" />
             </div>
 
             {/* Brand text */}
@@ -55,7 +55,7 @@ const Navbar = () => {
                 Panchatek Foods
               </p>
               {/* Main brand name - large Cormorant Garamond */}
-              <p className={`brand-name text-[1.35rem] leading-tight transition-colors duration-400 ${scrolled ? 'text-brown-700' : 'text-cream-50'}`}>
+              <p className={`brand-name text-[1.45rem] font-bold leading-tight transition-colors duration-400 ${scrolled ? 'text-maroon-500' : 'text-maroon-500'}`}>
                 Ashapriya Ghee
               </p>
             </div>
@@ -69,7 +69,7 @@ const Navbar = () => {
                 to={to}
                 end={to === '/'}
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? 'active' : ''} ${scrolled ? 'text-brown-600' : '!text-cream-200 hover:!text-gold-300'
+                  `nav-link ${isActive ? 'active' : ''} ${scrolled ? 'text-maroon-500' : 'text-maroon-500'
                   }`
                 }
               >
