@@ -11,22 +11,20 @@ const products = [
   {
     size: '200 ml', tag: 'Starter Pack',
     desc: 'Perfect for first-time buyers or gifting. Discover the rich aroma of Ashapriya Ghee.',
-    badge: 'Try It', icon: PiJarLight, featured: false,
+    badge: 'Try It', icon: PiJarLight, featured: false, price: '₹160',
+    img: '/IMG_4.PNG'
   },
   {
     size: '500 ml', tag: 'Family Favourite',
     desc: 'Our best-selling pack. Ideal for everyday dal, sabzi, rotis and weekend sweets.',
-    badge: '★ Best Seller', icon: PiJarLight, featured: true,
+    badge: '★ Best Seller', icon: PiJarLight, featured: true, price: '₹380',
+    img: '/IMG_4.PNG'
   },
   {
     size: '1 L', tag: 'Value Pack',
     desc: 'Great value for regular cooking households and festive season preparations.',
-    badge: 'Best Value', icon: PiJarLight, featured: false,
-  },
-  {
-    size: '5 L', tag: 'Bulk / HORECA',
-    desc: 'For restaurants, caterers, sweet shops and bulk buyers. Attractive pricing.',
-    badge: 'Bulk', icon: TbPackage, featured: false,
+    badge: 'Best Value', icon: PiJarLight, featured: false, price: '₹750',
+    img: '/IMG_4.PNG'
   },
 ];
 
@@ -89,11 +87,11 @@ const ProductsPage = () => {
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
                 {/* Image */}
-                <div className="relative aspect-square bg-gradient-to-br from-cream-200 via-cream-100 to-white overflow-hidden group">
+                <div className="relative aspect-square bg-gradient-to-br from-cream-200 via-cream-100 to-white overflow-hidden group flex items-center justify-center p-6">
                   <img
-                    src="/jar-placeholder.jpg"
+                    src={p.img || '/jar-placeholder.jpg'}
                     alt={`Ashapriya Ghee ${p.size}`}
-                    className="w-full h-full object-contain px-10 py-8 transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className={`absolute top-4 left-4 tag-badge ${p.featured ? '!bg-gold-400 !text-brown-800 !border-gold-500' : ''}`}>
                     {p.badge}
@@ -113,25 +111,30 @@ const ProductsPage = () => {
                   <p className="text-2xs text-maroon-500 tracking-[0.25em] uppercase font-jakarta font-700">
                     गाईचे तूप
                   </p>
-                  <h2
-                    className="font-display text-4xl text-brown-700 font-light leading-none"
-                    style={{ letterSpacing: '0.02em' }}
-                  >
-                    {p.size}
-                  </h2>
+                  <div className="flex items-center justify-between mb-1">
+                    <h2
+                      className="font-display text-4xl text-brown-700 font-light leading-none"
+                      style={{ letterSpacing: '0.02em' }}
+                    >
+                      {p.size}
+                    </h2>
+                    {p.price && (
+                      <span className="font-display text-2xl text-maroon-600 font-semibold">{p.price}</span>
+                    )}
+                  </div>
                   <p className="text-xs text-gold-700 font-jakarta font-700 uppercase tracking-wider flex items-center gap-1">
                     <FiCheckCircle size={11} className="text-gold-500" />
                     {p.tag}
                   </p>
                   <p className="text-sm text-brown-400 font-body leading-relaxed flex-1">{p.desc}</p>
                   <Link
-                    to="/contact"
+                    to={`/product/${p.size.replace(' ', '')}`}
                     className={`btn-gold !py-2.5 !text-2xs flex items-center justify-center gap-2 mt-auto ${p.featured
-                        ? ''
-                        : '!from-brown-600 !to-brown-700 !text-white !shadow-none hover:!shadow-card-hover'
+                      ? ''
+                      : '!from-brown-600 !to-brown-700 !text-white !shadow-none hover:!shadow-card-hover'
                       }`}
                   >
-                    {p.featured ? 'Order Now' : 'Enquire'}
+                    Buy Now
                     <FiArrowRight size={12} />
                   </Link>
                 </div>

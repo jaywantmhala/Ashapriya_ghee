@@ -9,6 +9,10 @@ import AboutPage from './pages/AboutPage.jsx';
 import ProductsPage from './pages/ProductsPage.jsx';
 import GalleryPage from './pages/GalleryPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
+import ProductDetailsPage from './pages/ProductDetailsPage.jsx';
+import CheckoutPage from './pages/CheckoutPage.jsx';
+import OrderSuccessPage from './pages/OrderSuccessPage.jsx';
+import OrdersTrackingPage from './pages/OrdersTrackingPage.jsx';
 
 const pageTitles = {
   '/': 'Ashapriya Ghee | Premium Pure Cow Ghee – Tradition in Every Spoon',
@@ -61,6 +65,10 @@ const AppShell = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/product/:id" element={<ProductDetailsPage />} />
+          <Route path="/checkout/:id" element={<CheckoutPage />} />
+          <Route path="/order-success" element={<OrderSuccessPage />} />
+          <Route path="/orders" element={<OrdersTrackingPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>

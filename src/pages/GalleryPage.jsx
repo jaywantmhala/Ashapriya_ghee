@@ -10,12 +10,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const images = [
+  { src: '/Ghee%20(1)_page-0001.jpg', alt: 'Ashapriya Ghee Premium Label', tag: 'Purity Label' },
   { src: '/about-hero.jpg', alt: 'Traditional ghee making process', tag: 'Craftsmanship' },
+  { src: '/IMG_5.PNG', alt: 'Ashapriya Ghee 1L Jar', tag: 'Value Pack' },
   { src: '/gallery-sweets.jpg', alt: 'Indian festive sweets prepared with ghee', tag: 'Festive Sweets' },
+  { src: '/IMG_6.PNG', alt: 'Ashapriya Ghee 2L Jar', tag: 'Family Pack' },
   { src: '/gallery-tadka.jpg', alt: 'Tadka preparation with Ashapriya Ghee', tag: 'Everyday Cooking' },
   { src: '/gallery-jars-table.jpg', alt: 'Farm fresh cow milk source', tag: 'Farm to Table' },
+  { src: '/IMG_7.PNG', alt: 'Ashapriya Ghee Bulk Pack', tag: 'Bulk Pack' },
   { src: '/hero-ashapriya.jpg', alt: 'Ashapriya Ghee premium jar product shot', tag: 'Product Display' },
-  { src: '/jar-placeholder.jpg', alt: 'Ashapriya Ghee jar lineup', tag: 'Packaging' },
 ];
 
 const GalleryPage = () => {
@@ -86,7 +89,7 @@ const GalleryPage = () => {
             {images.map((img, i) => (
               <figure
                 key={img.src}
-                className="relative overflow-hidden rounded-3xl shadow-card group cursor-pointer mb-5 break-inside-avoid gallery-item"
+                className="relative overflow-hidden rounded-3xl shadow-card bg-cream-50 group cursor-pointer mb-5 break-inside-avoid gallery-item"
                 onClick={() => setSelected(img)}
               >
                 <img

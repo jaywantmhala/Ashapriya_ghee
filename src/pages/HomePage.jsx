@@ -24,9 +24,9 @@ const features = [
 ];
 
 const products = [
-  { size: '200 ml', subtitle: 'Starter Pack', desc: 'Perfect for trying or gifting.', tag: 'Try It', img: '/jar-placeholder.jpg' },
-  { size: '500 ml', subtitle: 'Family Favourite', desc: 'Best seller for everyday cooking.', tag: '★ Best Seller', img: '/jar-placeholder.jpg', featured: true },
-  { size: '1 L', subtitle: 'Value Pack', desc: 'Great value for regular households.', tag: 'Value', img: '/jar-placeholder.jpg' },
+  { size: '200 ml', subtitle: 'Starter Pack', desc: 'Perfect for trying or gifting.', tag: 'Try It', img: '/IMG_4.PNG', price: '₹160' },
+  { size: '500 ml', subtitle: 'Family Favourite', desc: 'Best seller for everyday cooking.', tag: '★ Best Seller', img: '/IMG_4.PNG', featured: true, price: '₹380' },
+  { size: '1 L', subtitle: 'Value Pack', desc: 'Great value for regular households.', tag: 'Value', img: '/IMG_4.PNG', price: '₹750' },
 ];
 
 const testimonials = [
@@ -377,17 +377,22 @@ const HomePage = () => {
                 </div>
                 <div className="p-6 flex flex-col flex-1 space-y-3">
                   <p className="text-2xs text-maroon-500 tracking-[0.25em] uppercase font-jakarta font-700">गाईचे तूप</p>
-                  <h3 className="font-display text-3xl text-brown-700 font-light" style={{ letterSpacing: '0.03em' }}>
-                    {p.size} <span className="text-xl text-brown-400">Jar</span>
-                  </h3>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display text-3xl text-brown-700 font-light" style={{ letterSpacing: '0.03em' }}>
+                      {p.size} <span className="text-xl text-brown-400">Jar</span>
+                    </h3>
+                    {p.price && (
+                      <span className="font-display text-2xl text-maroon-600 font-semibold">{p.price}</span>
+                    )}
+                  </div>
                   <p className="text-xs text-gold-700 font-jakarta font-700 uppercase tracking-wider">{p.subtitle}</p>
                   <p className="text-sm text-brown-400 font-body leading-relaxed flex-1">{p.desc}</p>
                   <Link
-                    to="/contact"
+                    to={`/product/${p.size.replace(' ', '')}`}
                     className={`btn-gold !py-2.5 !text-2xs flex items-center justify-center gap-2 mt-auto ${p.featured ? '' : '!from-brown-600 !to-brown-700 !text-white !shadow-none hover:!shadow-[0_12px_30px_rgba(60,30,10,0.25)]'
                       }`}
                   >
-                    Enquire Now <FiArrowRight size={12} />
+                    Buy Now <FiArrowRight size={12} />
                   </Link>
                 </div>
               </div>

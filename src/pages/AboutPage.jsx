@@ -72,16 +72,12 @@ const AboutPage = () => {
             <div className="gold-divider" />
             <div className="space-y-5 text-brown-400 font-body leading-relaxed text-base">
               <p>
-                At Panchatek Foods, we believe that ghee is more than an ingredient — it is
-                a part of Indian tradition, hospitality and health. <strong className="text-brown-600">Ashapriya Ghee</strong> was
-                created with one simple promise: to offer pure, flavourful cow ghee that
-                reminds you of तूप made at home by our mothers and grandmothers.
+                <strong className='text-brown-600'>Ashapriya Cow Ghee</strong> is made from quality cow milk using traditional clarification methods to deliver a rich aroma and authentic taste. Carefully prepared and hygienically packed, this pure clarified butter is suitable for everyday cooking, frying, tempering, and preparing traditional Indian sweets and dishes
               </p>
               <p>
-                Our journey started with a small batch facility in Maharashtra, carefully
-                selecting quality cow milk and following time-honoured methods to maintain
-                nutrition, aroma and taste. Today, Ashapriya Ghee is trusted by households,
-                retailers and food businesses across Maharashtra and beyond.
+               Its natural grainy texture and consistent quality make it a reliable choice for home kitchens.
+Ashapriya Cow Ghee contains no added colors, flavors, or
+preservatives and comes in a secure, leak-proof 200 ml,500 ml,1000 ml  pack to maintain freshness.
               </p>
             </div>
           </div>
