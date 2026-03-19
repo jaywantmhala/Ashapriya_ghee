@@ -13,35 +13,39 @@ const OrderSuccessPage = () => {
 
     useReveal();
 
+    // Redirect if someone tries to access it directly without an order
     useEffect(() => {
-        // Animation for the checkmark
-        gsap.fromTo(".success-check",
-            { scale: 0, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.7)", delay: 0.2 }
-        );
-
-        // Confetti-like effect or simple bounce
-        gsap.to(".success-check", {
-            y: -10,
-            repeat: -1,
-            yoyo: true,
-            duration: 2,
-            ease: "power1.inOut"
-        });
-    }, []);
-
-    if (!paymentId) {
-        // Redirect if someone tries to access it directly without an order
-        useEffect(() => {
+        if (!paymentId) {
             const timer = setTimeout(() => navigate('/'), 3000);
             return () => clearTimeout(timer);
-        }, [navigate]);
+        }
+    }, [navigate, paymentId]);
 
+    useEffect(() => {
+        if (paymentId) {
+            // Animation for the checkmark
+            gsap.fromTo(".success-check",
+                { scale: 0, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.7)", delay: 0.2 }
+            );
+
+            // Confetti-like effect or simple bounce
+            gsap.to(".success-check", {
+                y: -10,
+                repeat: -1,
+                yoyo: true,
+                duration: 2,
+                ease: "power1.inOut"
+            });
+        }
+    }, [paymentId]);
+
+    if (!paymentId) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-cream-50 font-jakarta">
                 <div className="text-center space-y-4">
                     <div className="w-12 h-12 border-4 border-gold-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p className="text-brown-500">Redirecting to home...</p>
+                    <p className="text-brown-500">No order found. Redirecting to home...</p>
                 </div>
             </div>
         );

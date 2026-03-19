@@ -54,7 +54,7 @@ const AppShell = () => {
           <p className="text-2xs text-gold-500/60 tracking-[0.4em] uppercase font-jakarta">Premium Cow Ghee</p>
           {/* Progress bar */}
           <div className="mt-8 w-40 h-0.5 bg-brown-700 rounded-full overflow-hidden">
-            <div className="h-full bg-gold-400 origin-left animate-[scaleIn_1s_ease_forwards]" style={{ transformOrigin: 'left', animation: 'shimmer 1.2s ease forwards' }} />
+            <div className="h-full bg-gold-400 origin-left animate-scale-in" style={{ transformOrigin: 'left' }} />
           </div>
         </div>
       )}
