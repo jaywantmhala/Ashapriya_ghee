@@ -37,6 +37,23 @@ const CheckoutPage = () => {
         });
     };
 
+    // Product info mimicking DB lookup
+    let sizeLabel = id ? id.replace('ml', ' ml').replace('L', ' L') : '500 ml';
+    if (id === '2L' || id === '5L') sizeLabel = id.replace('L', ' L');
+
+    const pricing = {
+        '200ml': 160,
+        '500ml': 380,
+        '1L': 750,
+        '2L': 1450,
+        '5L': 3500
+    };
+
+    const unitPrice = pricing[id] || 380;
+    const subtotal = unitPrice * quantity;
+    const shipping = subtotal > 1000 ? 0 : 50;
+    const total = subtotal + shipping;
+
     const handlePay = async (e) => {
         e.preventDefault();
 
@@ -81,10 +98,10 @@ const CheckoutPage = () => {
                     const data = await res.json();
 
                     setIsProcessing(false);
-                    if (data.success) {
+                    if (data && data.success) {
                         navigate(`/order-success?id=${response.razorpay_payment_id}&order=${data.order_id}`);
                     } else {
-                        alert(`Paid but failed to save in database: ${data.error}`);
+                        alert(`Paid but failed to save in database: ${data?.error || 'Unknown error'}`);
                     }
                 } catch (err) {
                     setIsProcessing(false);
@@ -116,23 +133,6 @@ const CheckoutPage = () => {
 
         paymentObject.open();
     };
-
-    // Product info mimicking DB lookup
-    let sizeLabel = id ? id.replace('ml', ' ml').replace('L', ' L') : '500 ml';
-    if (id === '2L' || id === '5L') sizeLabel = id.replace('L', ' L');
-
-    const pricing = {
-        '200ml': 160,
-        '500ml': 380,
-        '1L': 750,
-        '2L': 1450,
-        '5L': 3500
-    };
-
-    const unitPrice = pricing[id] || 380;
-    const subtotal = unitPrice * quantity;
-    const shipping = subtotal > 1000 ? 0 : 50;
-    const total = subtotal + shipping;
 
     return (
         <div className="pt-28 pb-20 bg-cream-50 min-h-screen">

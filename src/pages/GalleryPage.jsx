@@ -10,7 +10,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const images = [
-  { src: '/Ghee%20(1)_page-0001.jpg', alt: 'Ashapriya Ghee Premium Label', tag: 'Purity Label' },
+  { src: '/Ghee (1)_page-0001.jpg', alt: 'Ashapriya Ghee Premium Label', tag: 'Purity Label' },
   { src: '/about-hero.jpg', alt: 'Traditional ghee making process', tag: 'Craftsmanship' },
   { src: '/IMG_5.PNG', alt: 'Ashapriya Ghee 1L Jar', tag: 'Value Pack' },
   { src: '/gallery-sweets.jpg', alt: 'Indian festive sweets prepared with ghee', tag: 'Festive Sweets' },
