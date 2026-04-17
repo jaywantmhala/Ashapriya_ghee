@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   FiStar, FiArrowRight, FiPhone, FiMail,
   FiCheckCircle, FiTruck, FiShield, FiAward,
@@ -58,6 +59,36 @@ const trustBadges = [
   { icon: TbBuildingStore, label: 'Wholesale Available' },
 ];
 
+const heroSlides = [
+  {
+    title: 'Pure Cow Ghee',
+    subtitle: 'Traditionally Consumed',
+    highlight: 'Ashapriya',
+    desc: 'Crafted with purity, rooted in Indian traditions. Experience the golden goodness of गाईचे तूप in every spoonful.',
+    link: '/products',
+    img: '/hero-ashapriya.jpg',
+    tag: 'Premium Quality'
+  },
+  {
+    title: 'Authentic Taste',
+    subtitle: 'From Local Farms',
+    highlight: 'Pure',
+    desc: 'Golden grainy texture and irresistible homely aroma. Perfect for your daily nutrition and festive delights.',
+    link: '/products',
+    img: '/about-hero.jpg',
+    tag: 'Farm Sourced'
+  },
+  {
+    title: 'Our Tradition',
+    subtitle: 'Bilona Inspired',
+    highlight: 'Rich',
+    desc: 'Slow-simmered to perfection using traditional methods to preserve nutrition and authentic flavor.',
+    link: '/products',
+    img: '/gallery-jars-table.jpg',
+    tag: 'Natural Process'
+  }
+];
+
 const marqueeItems = [
   'Pure Cow Ghee',
   'गाईचे तूप',
@@ -77,6 +108,103 @@ const StarRating = ({ n = 5 }) => (
     ))}
   </div>
 );
+
+const HeroCarousel = () => {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="relative w-full h-full overflow-hidden">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.5 }}
+          className="absolute inset-0"
+        >
+          <div className="absolute inset-0 bg-black/40 z-10" />
+          <img
+            src={heroSlides[current].img}
+            alt={heroSlides[current].title}
+            className="w-full h-full object-cover object-center scale-105"
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="relative z-20 h-full flex items-center">
+        <div className="section-wrap w-full">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -30, opacity: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="max-w-2xl"
+            >
+              <div className="section-badge !bg-gold-500/10 !border-gold-500/20 !text-gold-400 mb-6 flex items-center gap-2">
+                <LuSparkles size={12} />
+                {heroSlides[current].tag}
+              </div>
+              
+              <h1 className="font-display font-light leading-[1.05] tracking-tight mb-6">
+                <span className="block text-[1.2rem] sm:text-[1.5rem] text-gold-400/80 mb-2 font-jakarta font-bold uppercase tracking-[0.3em]">
+                  {heroSlides[current].subtitle}
+                </span>
+                <span className="block text-[4.2rem] sm:text-[5.5rem] lg:text-[7rem] gold-gradient-text leading-tight">
+                  {heroSlides[current].highlight}
+                </span>
+                <span className="block text-[2.8rem] sm:text-[3.5rem] lg:text-[4rem] text-cream-50 font-light" style={{ letterSpacing: '0.1em' }}>
+                  {heroSlides[current].title}
+                </span>
+              </h1>
+
+              <p className="text-lg text-white/70 max-w-lg leading-relaxed font-body mb-8">
+                {heroSlides[current].desc}
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <Link to={heroSlides[current].link} className="btn-gold group">
+                  Explore Products 
+                  <motion.span 
+                    animate={{ x: [0, 5, 0] }} 
+                    transition={{ repeat: Infinity, duration: 2 }}
+                  >
+                    <FiArrowRight size={18} />
+                  </motion.span>
+                </Link>
+                <Link to="/contact" className="btn-outline">
+                  Contact Now
+                </Link>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Progress Dots */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+        {heroSlides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`w-12 h-1 rounded-full transition-all duration-500 ${
+              current === i ? 'bg-gold-500 w-20' : 'bg-white/20 hover:bg-white/40'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const Marquee = () => {
   const doubled = [...marqueeItems, ...marqueeItems];
@@ -102,173 +230,49 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* ══════════ HERO ══════════════════════════════════ */}
-      <section className="relative min-h-[96vh] flex items-center overflow-hidden">
-        {/* Background with parallax */}
-        <div
-          className="absolute inset-0 hero-gradient parallax-wrap"
-          style={{ transform: `translateY(${heroParallax * 0.3}px)` }}
-        />
-        {/* Grain */}
-        <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")" }}
-        />
-        {/* Glow orbs - parallax */}
-        <div
-          className="absolute top-20 right-0 w-[480px] h-[480px] rounded-full bg-gold-500/12 blur-3xl pointer-events-none parallax-wrap"
-          style={{ transform: `translateY(${heroParallax * -0.5}px)` }}
-        />
-        <div
-          className="absolute bottom-10 left-10 w-64 h-64 rounded-full bg-maroon-500/10 blur-3xl pointer-events-none parallax-wrap"
-          style={{ transform: `translateY(${heroParallax * 0.6}px)` }}
-        />
-        {/* Decorative rings */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-white/[0.04] pointer-events-none" />
-        <div className="absolute right-20 top-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full border border-gold-400/[0.07] pointer-events-none" />
-
-        <div className="section-wrap relative z-10 w-full py-28 grid lg:grid-cols-2 gap-16 items-center">
-
-          {/* ── Left: Hero Copy ── */}
-          <div className="space-y-7">
-            {/* Badge */}
-            <div className="section-badge !bg-gold-500/10 !border-gold-500/20 !text-gold-400 hero-line-1">
-              <LuSparkles size={12} />
-              Premium Cow Ghee · गाईचे तूप
-            </div>
-
-            {/* Company name - super prominent */}
-            <div className="hero-line-2">
-              <p className="brand-sub text-gold-400/50 mb-1">by Panchatek Foods</p>
-              <h1 className="font-display font-light leading-[1.05] tracking-tight">
-                {/* Main brand — huge Cormorant */}
-                <span
-                  className="block text-[4.2rem] sm:text-[5.5rem] lg:text-[6.5rem] gold-gradient-text"
-                  style={{ fontFamily: '"Cormorant Garamond", serif' }}
-                >
-                  Ashapriya
-                </span>
-                <span
-                  className="block text-[2.8rem] sm:text-[3.5rem] lg:text-[4rem] text-cream-50 font-light"
-                  style={{ letterSpacing: '0.25em', fontFamily: '"Cormorant Garamond", serif' }}
-                >
-                  G H E E
-                </span>
-              </h1>
-            </div>
-
-            {/* Tagline */}
-            <p className="font-display text-xl italic text-gold-300/60 font-light hero-line-3">
-              "Tradition in Every Spoon."
-            </p>
-
-            <p className="text-base text-white/55 max-w-md leading-relaxed font-body hero-line-4">
-              Crafted with purity, rooted in Indian traditions. Rich aroma, authentic taste
-              and the goodness of गाईचे तूप in every meal.
-            </p>
-
-            <div className="flex flex-wrap gap-4 hero-line-5">
-              <Link to="/products" id="hero-shop-btn" className="btn-gold flex items-center gap-2">
-                Shop Now <FiArrowRight size={15} />
-              </Link>
-              <Link to="/contact" id="hero-contact-btn" className="btn-outline flex items-center gap-2">
-                <FiPhone size={13} />
-                Contact Us
-              </Link>
-            </div>
-
-            {/* Stats */}
-            <div
-              className="grid grid-cols-2 sm:grid-cols-4 gap-5 pt-6 border-t border-white/10"
-              style={{ animation: 'fadeUp 0.8s 0.9s ease both' }}
-            >
-              {stats.map(s => (
-                <div key={s.label}>
-                  <p className="stat-num">{s.val}</p>
-                  <p className="text-2xs text-white/35 font-jakarta uppercase tracking-widest mt-1">{s.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── Right: Product Image with parallax ── */}
-          <div
-            ref={imgRef}
-            className="relative flex justify-center"
-            style={{ animation: 'scaleIn 0.9s 0.3s ease both' }}
-          >
-            {/* Glow behind image */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div
-                className="w-80 h-80 rounded-full bg-gold-500/20 blur-3xl parallax-wrap"
-                style={{ transform: `translateY(${imgOffset * -0.5}px)` }}
-              />
-            </div>
-
-            <div className="relative w-full max-w-[360px]">
-              {/* Floating card – top-left */}
-              <div
-                className="absolute -top-6 -left-5 z-10 card-glass !rounded-2xl !bg-cream-50/92 px-4 py-3 shadow-card whitespace-nowrap"
-                style={{ animation: 'float 5s 0.4s ease-in-out infinite' }}
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <PiMedalLight className="text-gold-500" size={14} />
-                  <p className="text-2xs text-brown-500 font-jakarta uppercase tracking-wider">FSSAI Certified</p>
-                </div>
-                <p className="font-serif text-brown-700 text-sm font-semibold flex items-center gap-1">
-                  <FiCheckCircle size={12} className="text-emerald-600" /> Premium Quality
-                </p>
-              </div>
-
-              {/* Floating card – bottom-right */}
-              <div
-                className="absolute -bottom-5 -right-5 z-10 card-glass !rounded-2xl !bg-cream-50/92 px-4 py-3 shadow-card whitespace-nowrap"
-                style={{ animation: 'float 5s 1.2s ease-in-out infinite' }}
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <TbBottle className="text-gold-500" size={14} />
-                  <p className="text-2xs text-brown-500 font-jakarta uppercase tracking-wider">Available In</p>
-                </div>
-                <p className="font-serif text-brown-700 text-sm font-semibold">200ml · 500ml · 1L</p>
-              </div>
-
-              {/* Main image with parallax */}
-              <div
-                className="relative rounded-[2.5rem] overflow-hidden border border-gold-500/20 shadow-[0_32px_90px_rgba(0,0,0,0.55)] parallax-wrap"
-                style={{ transform: `translateY(${imgOffset * -0.3}px)` }}
-              >
-                <img
-                  src="/hero-ashapriya.jpg"
-                  alt="Ashapriya Ghee premium cow ghee jar"
-                  className="w-full aspect-[4/5] object-cover"
-                />
-                <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-brown-900/85 to-transparent" />
-                <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
-                  <div>
-                    <p className="brand-sub text-white/50 mb-0.5">Panchatek Foods</p>
-                    <p className="brand-name text-xl text-white leading-none">Ashapriya Ghee</p>
-                  </div>
-                  <div className="tag-badge">Pure &amp; Natural</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <section className="relative h-screen min-h-[700px] bg-brown-900 w-full overflow-hidden">
+        <HeroCarousel />
+        
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none">
-          <p className="brand-sub text-white/25">Scroll</p>
-          <div className="w-5 h-9 rounded-full border border-white/20 flex items-start justify-center pt-1.5">
-            <div
-              className="w-1 h-2.5 bg-gold-400 rounded-full"
-              style={{ animation: 'scrollBounce 2s ease-in-out infinite' }}
-            />
-          </div>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2 }}
+          className="absolute bottom-16 right-12 hidden lg:flex flex-col items-center gap-4 z-30"
+        >
+          <div className="w-[1px] h-24 bg-gradient-to-b from-transparent via-gold-500/50 to-gold-500" />
+          <p className="text-[10px] text-gold-400 font-jakarta font-bold uppercase tracking-[0.4em] [writing-mode:vertical-lr]">
+            Scroll to Discover
+          </p>
+        </motion.div>
       </section>
 
       {/* ══════════ MARQUEE TICKER ════════════════════════ */}
       <Marquee />
+
+      {/* ══════════ QUICK STATS ═══════════════════════════ */}
+      <section className="py-16 bg-white border-b border-gold-200/30">
+        <div className="section-wrap">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+            {stats.map((s, i) => (
+              <motion.div 
+                key={s.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center group"
+              >
+                <p className="stat-num group-hover:scale-110 transition-transform duration-500">{s.val}</p>
+                <div className="gold-divider mx-auto w-8 my-3 opacity-40 group-hover:w-16 transition-all duration-500" />
+                <p className="text-[10px] text-brown-400 font-jakarta font-bold uppercase tracking-[0.2em]">
+                  {s.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ══════════ TRUST BADGES ══════════════════════════ */}
       <section className="py-10 bg-white/80 border-b border-gold-200/40">
@@ -330,21 +334,21 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ══════════ PRODUCTS PREVIEW ══════════════════════ */}
-      <section id="home-products" className="py-24 bg-white">
+      {/* ══════════ FEATURED PRODUCTS SLIDER ══════════════ */}
+      <section id="home-products" className="py-24 bg-white overflow-hidden w-full">
         <div className="section-wrap">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
             <div className="reveal-left">
               <div className="section-badge mb-5">
                 <TbBottle size={12} />
-                Our Products
+                Featured Collection
               </div>
               <h2
                 className="font-display text-5xl md:text-6xl text-brown-700 font-light leading-tight mb-3"
                 style={{ letterSpacing: '-0.01em' }}
               >
-                Thoughtfully Packed<br />
-                <span className="italic font-semibold gold-gradient-text">for Every Home</span>
+                Discover the Perfect<br />
+                <span className="italic font-semibold gold-gradient-text">Jar for You</span>
               </h2>
               <div className="gold-divider" />
             </div>
@@ -354,100 +358,146 @@ const HomePage = () => {
               </Link>
             </div>
           </div>
+        </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
-            {products.map((p, i) => (
-              <div
-                key={p.size}
-                className={`card-product flex flex-col reveal ${p.featured ? 'ring-2 ring-gold-400 shadow-glow-gold' : ''}`}
-                style={{ transitionDelay: `${i * 120}ms` }}
-              >
-                <div className="relative aspect-square bg-gradient-to-br from-cream-200 via-cream-100 to-white overflow-hidden group">
-                  <img
-                    src={p.img}
-                    alt={`Ashapriya Ghee ${p.size}`}
-                    className="w-full h-full object-contain px-10 py-8 transition-transform duration-700 group-hover:scale-108"
-                  />
-                  <div className={`absolute top-4 right-4 tag-badge ${p.featured ? '!bg-gold-400 !text-brown-800 border-gold-500' : ''}`}>
-                    {p.tag}
-                  </div>
-                  {p.featured && (
-                    <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
-                  )}
-                </div>
-                <div className="p-6 flex flex-col flex-1 space-y-3">
-                  <p className="text-2xs text-maroon-500 tracking-[0.25em] uppercase font-jakarta font-700">गाईचे तूप</p>
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-display text-3xl text-brown-700 font-light" style={{ letterSpacing: '0.03em' }}>
-                      {p.size} <span className="text-xl text-brown-400">Jar</span>
-                    </h3>
-                    {p.price && (
-                      <span className="font-display text-2xl text-maroon-600 font-semibold">{p.price}</span>
-                    )}
-                  </div>
-                  <p className="text-xs text-gold-700 font-jakarta font-700 uppercase tracking-wider">{p.subtitle}</p>
-                  <p className="text-sm text-brown-400 font-body leading-relaxed flex-1">{p.desc}</p>
-                  <Link
-                    to={`/product/${p.size.replace(' ', '')}`}
-                    className={`btn-gold !py-2.5 !text-2xs flex items-center justify-center gap-2 mt-auto ${p.featured ? '' : '!from-brown-600 !to-brown-700 !text-white !shadow-none hover:!shadow-[0_12px_30px_rgba(60,30,10,0.25)]'
-                      }`}
-                  >
-                    Buy Now <FiArrowRight size={12} />
-                  </Link>
+        {/* Slider outside constrained section for edge-to-edge feel */}
+        <div className="flex gap-8 overflow-x-auto pb-12 scrollbar-hide snap-x transition-all px-[clamp(1rem,5vw,5rem)]">
+          {products.map((p, i) => (
+            <motion.div
+              key={p.size}
+              whileHover={{ y: -10 }}
+              className={`min-w-[300px] md:min-w-[380px] snap-center card-product flex flex-col ${p.featured ? 'ring-2 ring-gold-400 shadow-glow-gold' : ''}`}
+            >
+              <div className="relative aspect-[4/5] bg-gradient-to-br from-cream-100 to-white overflow-hidden group">
+                <img
+                  src={p.img}
+                  alt={`Ashapriya Ghee ${p.size}`}
+                  className="w-full h-full object-contain px-12 py-10 transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className={`absolute top-6 right-6 tag-badge ${p.featured ? '!bg-gold-400 !text-brown-800 border-gold-500' : ''}`}>
+                  {p.tag}
                 </div>
               </div>
-            ))}
-          </div>
+              <div className="p-8 flex flex-col flex-1 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-display text-3xl text-brown-700">
+                    {p.size} <span className="text-xl text-brown-400 font-light">Jar</span>
+                  </h3>
+                  <span className="font-display text-2xl text-maroon-600 font-semibold">{p.price}</span>
+                </div>
+                <p className="text-sm text-brown-400 font-body leading-relaxed flex-1">
+                  {p.desc}
+                </p>
+                <Link
+                  to={`/product/${p.size.replace(' ', '')}`}
+                  className={`btn-gold !py-3 !text-2xs flex items-center justify-center gap-2 mt-auto ${p.featured ? '' : '!from-brown-600 !to-brown-700 !text-white !shadow-none'}`}
+                >
+                  Buy Now <FiArrowRight size={12} />
+                </Link>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
+        <div className="section-wrap">
           <p className="text-center text-sm text-brown-400 mt-8 font-body reveal">
-            For bulk & distributor enquiries in Maharashtra & PAN India —{' '}
-            <Link to="/contact" className="text-maroon-500 underline underline-offset-4 hover:text-maroon-700 transition-colors">
-              Contact Panchatek Foods
-            </Link>
+            Swipe to see all varieties 
           </p>
         </div>
       </section>
 
       {/* ══════════ PROCESS ══════════════════════════════ */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 hero-gradient" />
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-gold-500/10 blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-maroon-500/10 blur-3xl" />
+      <section className="py-24 relative overflow-hidden bg-brown-900">
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-gold-500/5 blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-maroon-500/5 blur-3xl" />
 
         <div className="section-wrap relative z-10">
-          <div className="text-center mb-16 reveal">
-            <div className="section-badge !text-gold-400 !border-gold-500/20 !bg-gold-500/8 mb-5">
-              <PiFlameLight size={13} />
-              Our Process
-            </div>
-            <h2
-              className="font-display text-5xl md:text-6xl text-white font-light mb-4"
-              style={{ letterSpacing: '-0.01em' }}
+          <div className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
             >
-              From Farm to Your{' '}
-              <span className="gold-gradient-text italic font-semibold">Table</span>
-            </h2>
-            <div className="gold-divider mx-auto" />
+              <div className="section-badge !text-gold-400 !border-gold-500/20 !bg-gold-500/8 mb-5">
+                <PiFlameLight size={13} />
+                Our Process
+              </div>
+              <h2 className="font-display text-5xl md:text-7xl text-white font-light mb-6">
+                From Farm to Your <span className="gold-gradient-text italic">Table</span>
+              </h2>
+              <div className="gold-divider mx-auto" />
+            </motion.div>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {process.map((p, i) => (
-              <div
+              <motion.div
                 key={p.num}
-                className="card-dark p-7 space-y-5 reveal group"
-                style={{ transitionDelay: `${i * 100}ms` }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="card-dark p-8 group relative overflow-hidden"
               >
-                <div className="flex items-center justify-between">
-                  <div className="icon-circle icon-circle-dark w-12 h-12 group-hover:!bg-gold-500/20 group-hover:!text-gold-400 transition-all">
-                    <p.icon size={24} strokeWidth={1} />
-                  </div>
-                  <span className="font-display text-5xl text-gold-500/15 font-bold">{p.num}</span>
+                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <p.icon size={80} />
                 </div>
-                <h3 className="font-serif text-xl text-white">{p.title}</h3>
-                <p className="text-sm text-white/45 font-body leading-relaxed">{p.desc}</p>
-              </div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="icon-circle icon-circle-dark w-14 h-14 group-hover:!bg-gold-500 group-hover:!text-brown-900 transition-all duration-500">
+                    <p.icon size={28} />
+                  </div>
+                  <span className="font-display text-6xl text-gold-500/20 font-bold group-hover:text-gold-500/40 transition-colors">
+                    {p.num}
+                  </span>
+                </div>
+                <h3 className="font-serif text-2xl text-white mb-4">{p.title}</h3>
+                <p className="text-sm text-white/50 font-body leading-relaxed group-hover:text-white/70 transition-colors">
+                  {p.desc}
+                </p>
+                {i < process.length - 1 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-4 translate-x-1/2 -translate-y-1/2 z-20 text-gold-500/30">
+                    <FiArrowRight size={24} />
+                  </div>
+                )}
+              </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ══════════ TRADITION PARALLAX ═══════════════════ */}
+      <section className="relative py-40 overflow-hidden flex items-center justify-center">
+        <div 
+          className="absolute inset-0 z-0 w-full h-full"
+          style={{ 
+            backgroundImage: `url('/IMG_1.PNG')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <div className="absolute inset-0 bg-brown-900/60 backdrop-blur-[2px]" />
+        </div>
+        
+        <div className="section-wrap relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto"
+          >
+            <h2 className="font-display text-6xl md:text-8xl text-gold-400 font-light mb-8 italic">
+              A Legacy of Purity
+            </h2>
+            <p className="text-xl md:text-2xl text-cream-50/80 font-serif leading-relaxed italic mb-10">
+              "Every drop of Ashapriya Ghee tells a story of 
+              Indian tradition, slow-cooked to perfection just like 
+              it was made in our grandmother's kitchen."
+            </p>
+            <div className="gold-divider mx-auto w-24 h-1" />
+          </motion.div>
         </div>
       </section>
 
