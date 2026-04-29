@@ -60,33 +60,10 @@ const trustBadges = [
 ];
 
 const heroSlides = [
-  {
-    title: 'Pure Cow Ghee',
-    subtitle: 'Traditionally Consumed',
-    highlight: 'Ashapriya',
-    desc: 'Crafted with purity, rooted in Indian traditions. Experience the golden goodness of गाईचे तूप in every spoonful.',
-    link: '/products',
-    img: '/hero-ashapriya.jpg',
-    tag: 'Premium Quality'
-  },
-  {
-    title: 'Authentic Taste',
-    subtitle: 'From Local Farms',
-    highlight: 'Pure',
-    desc: 'Golden grainy texture and irresistible homely aroma. Perfect for your daily nutrition and festive delights.',
-    link: '/products',
-    img: '/about-hero.jpg',
-    tag: 'Farm Sourced'
-  },
-  {
-    title: 'Our Tradition',
-    subtitle: 'Bilona Inspired',
-    highlight: 'Rich',
-    desc: 'Slow-simmered to perfection using traditional methods to preserve nutrition and authentic flavor.',
-    link: '/products',
-    img: '/gallery-jars-table.jpg',
-    tag: 'Natural Process'
-  }
+  { img: '/banner1.png' },
+  { img: '/banner2.png' },
+  { img: '/banner3.png' },
+  { img: '/banner4.png' }
 ];
 
 const marqueeItems = [
@@ -120,85 +97,32 @@ const HeroCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full aspect-[731/270] min-h-[150px] overflow-hidden bg-brown-900 border-b border-gold-200/40">
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.5 }}
           className="absolute inset-0"
         >
-          <div className="absolute inset-0 bg-black/40 z-10" />
           <img
             src={heroSlides[current].img}
-            alt={heroSlides[current].title}
-            className="w-full h-full object-cover object-center scale-105"
+            alt={`Banner ${current + 1}`}
+            className="w-full h-full object-cover object-center"
           />
         </motion.div>
       </AnimatePresence>
 
-      <div className="relative z-20 h-full flex items-center">
-        <div className="section-wrap w-full">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -30, opacity: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="max-w-2xl"
-            >
-              <div className="section-badge !bg-gold-500/10 !border-gold-500/20 !text-gold-400 mb-6 flex items-center gap-2">
-                <LuSparkles size={12} />
-                {heroSlides[current].tag}
-              </div>
-              
-              <h1 className="font-display font-light leading-[1.05] tracking-tight mb-6">
-                <span className="block text-[1.2rem] sm:text-[1.5rem] text-gold-400/80 mb-2 font-jakarta font-bold uppercase tracking-[0.3em]">
-                  {heroSlides[current].subtitle}
-                </span>
-                <span className="block text-[4.2rem] sm:text-[5.5rem] lg:text-[7rem] gold-gradient-text leading-tight">
-                  {heroSlides[current].highlight}
-                </span>
-                <span className="block text-[2.8rem] sm:text-[3.5rem] lg:text-[4rem] text-cream-50 font-light" style={{ letterSpacing: '0.1em' }}>
-                  {heroSlides[current].title}
-                </span>
-              </h1>
-
-              <p className="text-lg text-white/70 max-w-lg leading-relaxed font-body mb-8">
-                {heroSlides[current].desc}
-              </p>
-
-              <div className="flex flex-wrap gap-4">
-                <Link to={heroSlides[current].link} className="btn-gold group">
-                  Explore Products 
-                  <motion.span 
-                    animate={{ x: [0, 5, 0] }} 
-                    transition={{ repeat: Infinity, duration: 2 }}
-                  >
-                    <FiArrowRight size={18} />
-                  </motion.span>
-                </Link>
-                <Link to="/contact" className="btn-outline">
-                  Contact Now
-                </Link>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
-
       {/* Progress Dots */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+      <div className="absolute bottom-4 sm:bottom-6 md:bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-2 sm:gap-3">
         {heroSlides.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`w-12 h-1 rounded-full transition-all duration-500 ${
-              current === i ? 'bg-gold-500 w-20' : 'bg-white/20 hover:bg-white/40'
-            }`}
+            className={`h-1.5 rounded-full transition-all duration-500 ${current === i ? 'bg-gold-500 w-10 sm:w-16' : 'bg-white/40 hover:bg-white/60 w-6 sm:w-10'
+              }`}
           />
         ))}
       </div>
@@ -230,21 +154,8 @@ const HomePage = () => {
 
   return (
     <div>
-      <section className="relative h-screen min-h-[700px] bg-brown-900 w-full overflow-hidden">
+      <section className="relative w-full bg-brown-900 overflow-hidden">
         <HeroCarousel />
-        
-        {/* Scroll indicator */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-          className="absolute bottom-16 right-12 hidden lg:flex flex-col items-center gap-4 z-30"
-        >
-          <div className="w-[1px] h-24 bg-gradient-to-b from-transparent via-gold-500/50 to-gold-500" />
-          <p className="text-[10px] text-gold-400 font-jakarta font-bold uppercase tracking-[0.4em] [writing-mode:vertical-lr]">
-            Scroll to Discover
-          </p>
-        </motion.div>
       </section>
 
       {/* ══════════ MARQUEE TICKER ════════════════════════ */}
@@ -255,7 +166,7 @@ const HomePage = () => {
         <div className="section-wrap">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {stats.map((s, i) => (
-              <motion.div 
+              <motion.div
                 key={s.label}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -401,7 +312,7 @@ const HomePage = () => {
 
         <div className="section-wrap">
           <p className="text-center text-sm text-brown-400 mt-8 font-body reveal">
-            Swipe to see all varieties 
+            Swipe to see all varieties
           </p>
         </div>
       </section>
@@ -468,9 +379,9 @@ const HomePage = () => {
 
       {/* ══════════ TRADITION PARALLAX ═══════════════════ */}
       <section className="relative py-40 overflow-hidden flex items-center justify-center">
-        <div 
+        <div
           className="absolute inset-0 z-0 w-full h-full"
-          style={{ 
+          style={{
             backgroundImage: `url('/IMG_1.PNG')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -479,7 +390,7 @@ const HomePage = () => {
         >
           <div className="absolute inset-0 bg-brown-900/60 backdrop-blur-[2px]" />
         </div>
-        
+
         <div className="section-wrap relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -492,8 +403,8 @@ const HomePage = () => {
               A Legacy of Purity
             </h2>
             <p className="text-xl md:text-2xl text-cream-50/80 font-serif leading-relaxed italic mb-10">
-              "Every drop of Ashapriya Ghee tells a story of 
-              Indian tradition, slow-cooked to perfection just like 
+              "Every drop of Ashapriya Ghee tells a story of
+              Indian tradition, slow-cooked to perfection just like
               it was made in our grandmother's kitchen."
             </p>
             <div className="gold-divider mx-auto w-24 h-1" />
