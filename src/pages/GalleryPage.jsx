@@ -18,7 +18,6 @@ const images = [
   { src: '/gallery-tadka.jpg', alt: 'Tadka preparation with Ashapriya Ghee', tag: 'Everyday Cooking' },
   { src: '/gallery-jars-table.jpg', alt: 'Farm fresh cow milk source', tag: 'Farm to Table' },
   { src: '/IMG_7.PNG', alt: 'Ashapriya Ghee Bulk Pack', tag: 'Bulk Pack' },
-  { src: '/hero-ashapriya.jpg', alt: 'Ashapriya Ghee premium jar product shot', tag: 'Product Display' },
 ];
 
 const GalleryPage = () => {
